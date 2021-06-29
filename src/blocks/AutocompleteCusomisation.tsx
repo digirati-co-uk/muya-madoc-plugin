@@ -48,7 +48,7 @@ export const AutocompleteCustomisation = ({
             {
               property,
               field: 'dataSource',
-              value: pattern ? pattern.replace(/%/, newEndpoint) : newEndpoint,
+              value: pattern ? pattern.replace(/\$id/, newEndpoint) : newEndpoint,
             },
           ],
         },
@@ -100,7 +100,7 @@ blockConfigFor(AutocompleteCustomisation, {
     heading: { type: 'text-field', label: 'Heading' },
     actionLabel: { type: 'text-field', label: 'Action label' },
     property: { type: 'text-field', label: 'Property', description: 'The property name from your capture model for this project.' },
-    pattern: { type: 'text-field', label: 'Pattern for submitting', description: 'You can define a pattern where the symbol "%" will be replaced with user input' },
+    pattern: { type: 'text-field', label: 'Pattern for submitting', description: 'You can define a pattern. e.g. /my-api?tei=$id&query=% will replace $id with whatever the user inputs.' },
     thanks: { type: 'text-field', label: 'Thank you message' },
     adminMessage: { type: 'text-field', label: 'Admin message', description: 'This will be shown to an admin when they approve the request' },
   },
