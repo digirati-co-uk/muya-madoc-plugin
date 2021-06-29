@@ -1,14 +1,33 @@
 import React, { useState } from 'react';
 import { blockConfigFor, Button, useApi, useUser, useRouteContext } from '@madoc.io/types';
 import { useMutation } from 'react-query';
+import styled from 'styled-components';
 import type { UpdateModelConfigRequest } from '@madoc.io/types/dist/gateway/api-definitions/update-model-config';
 
+const AutocompleteContainer = styled.div`
+  display: flex;
+  max-width: 550px;
+  
+  input {
+    padding: .3em;
+    margin-right: .5em;
+    flex: 1 1 0px;
+  }
+`;
+
+const Heading3 = styled.h3`
+  margin-top: 0.4em;
+`;
+
+
 export const AutocompleteCustomisation = ({
+  heading,
   property,
   pattern,
   adminMessage,
   thanks,
 }: {
+  heading: string;
   property: string;
   pattern: string;
   adminMessage: string;
@@ -61,12 +80,15 @@ export const AutocompleteCustomisation = ({
   }
 
   return (
-    <div>
-      <input disabled={createStatus.isLoading} type="text" value={newId} onChange={(e) => setNewId(e.target.value)} />
-      <Button disabled={createStatus.isLoading} onClick={() => create(newId)}>
-        Submit
-      </Button>
-    </div>
+    <>
+      {heading ? <Heading3>{heading}</Heading3> : null}
+      <AutocompleteContainer>
+        <input disabled={createStatus.isLoading} type="text" value={newId} onChange={(e) => setNewId(e.target.value)} />
+        <Button disabled={createStatus.isLoading} $primary onClick={() => create(newId)}>
+          Submit
+        </Button>
+      </AutocompleteContainer>
+      </>
   );
 };
 
@@ -75,13 +97,16 @@ blockConfigFor(AutocompleteCustomisation, {
   label: 'Customise TEI autocomplete',
   requiredContext: ['manifest', 'project'],
   editor: {
-    property: { type: 'text-field' },
-    pattern: { type: 'text-field' },
-    thanks: { type: 'text-field' },
-    adminMessage: { type: 'text-field' },
+    heading: { type: 'text-field', label: 'Heading' },
+    actionLabel: { type: 'text-field', label: 'Action label' },
+    property: { type: 'text-field', label: 'Property', description: 'The property name from your capture model for this project.' },
+    pattern: { type: 'text-field', label: 'Pattern for submitting', description: 'You can define a pattern where the symbol "%" will be replaced with user input' },
+    thanks: { type: 'text-field', label: 'Thank you message' },
+    adminMessage: { type: 'text-field', label: 'Admin message', description: 'This will be shown to an admin when they approve the request' },
   },
   anyContext: [],
   defaultProps: {
+    heading: '',
     property: '',
     pattern: '',
     thanks: 'Thank you',
