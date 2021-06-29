@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "lib": ["dom", "es2020"],
+    "target": "es5",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "module": "es2015",
+    "declaration": false,
+    "declarationMap": false,
+    "moduleResolution": "node",
+    "outDir": "./lib",
+    "noEmitOnError": false,
+    "strict": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "jsx": "react",
+    "resolveJsonModule": true,
+    "noImplicitAny": true,
+    "downlevelIteration": true,
+    "noUnusedLocals": false,
+    "noFallthroughCasesInSwitch": true
+  },
+  "references": []
+}
