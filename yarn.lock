@@ -81,10 +81,10 @@
     uuid "^8.3.2"
     yargs "^17.0.1"
 
-"@madoc.io/types@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@madoc.io/types/-/types-0.0.5.tgz#f6db57bd60964b2479000ba672cc00b6804f9545"
-  integrity sha512-vggeOWBNUEKArk6fLlvjFfepNUHxV8EzVIU4rsLh3Fqzrfkoj6Ov9n/zldS7LXpvL4Z+IsYCOo7VKPturL8I1A==
+"@madoc.io/types@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@madoc.io/types/-/types-0.0.6.tgz#5dbca4e01bf395226358c70225637ba2092d6244"
+  integrity sha512-F0aH19czz8BIYL/Oy+GwMpqxwk+puZBZA1ClHHDqFiAHsySqqFh/sMCtpT99NyplDLM9tqMhlQSDUHaKAlReyA==
   dependencies:
     "@types/react" "*"
     "@types/styled-components" "*"
