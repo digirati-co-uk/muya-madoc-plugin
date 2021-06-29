@@ -20,26 +20,28 @@ export const AutocompleteCustomisation = ({
   const [newId, setNewId] = useState('');
 
   const [create, createStatus] = useMutation(async (newEndpoint: string) => {
-    const request: UpdateModelConfigRequest = {
-      id: 'update-model-config',
-      summary: adminMessage || `User ${user?.name} wants to update the autocomplete endpoint (manifest: ${manifestId} in project ${projectId})`,
-      body: {
-        documentChanges: [
-          {
-            property,
-            field: 'dataSource',
-            value: pattern ? pattern.replace(/%/, newEndpoint) : newEndpoint,
-          },
-        ],
-      },
-      query: {
-        project_id: 'model-config',
-        manifest_id: 2,
-      },
-      params: {},
-    };
+    if (projectId && manifestId) {
+      const request: UpdateModelConfigRequest = {
+        id: 'update-model-config',
+        summary: adminMessage || `User ${user?.name} wants to update the autocomplete endpoint (manifest: ${manifestId} in project ${projectId})`,
+        body: {
+          documentChanges: [
+            {
+              property,
+              field: 'dataSource',
+              value: pattern ? pattern.replace(/%/, newEndpoint) : newEndpoint,
+            },
+          ],
+        },
+        query: {
+          project_id: projectId,
+          manifest_id: manifestId,
+        },
+        params: {},
+      };
 
-    await api.createDelegatedRequest(request);
+      await api.createDelegatedRequest(request);
+    }
   });
 
   if (!property) {
