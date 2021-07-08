@@ -26,7 +26,7 @@
     "@madoc.io/types": "^0.0.8",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "react-query": "^2.16.0",
-    "@types/react": "^17.0.13",
+    "@types/react": "^17.0.14",
     "@types/react-router-dom": "^5.1.8",
     "prettier": "^2.3.0",
     "rollup": "^2.52.8",
