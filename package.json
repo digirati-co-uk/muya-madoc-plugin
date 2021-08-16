@@ -21,7 +21,7 @@
     "thumbnail": "https://user-images.githubusercontent.com/8266711/123805756-43698a80-d8e6-11eb-92f5-4da984262f20.png"
   },
   "devDependencies": {
-    "@ampproject/rollup-plugin-closure-compiler": "^0.26.0",
+    "@ampproject/rollup-plugin-closure-compiler": "^0.27.0",
     "@madoc.io/bundler": "1.0.9",
     "@madoc.io/types": "^0.0.8",
     "@rollup/plugin-node-resolve": "^13.0.4",
