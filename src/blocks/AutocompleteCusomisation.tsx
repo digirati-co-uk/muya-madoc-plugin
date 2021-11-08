@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { blockConfigFor, Button, useApi, useUser, useRouteContext } from '@madoc.io/types';
-import { useMutation } from 'react-query';
+import React, { useState } from "react";
+import { blockConfigFor, Button, useApi, useUser, useRouteContext, Form, UpdateModelConfigRequest } from '@madoc.io/types';
+import { useMutation, useQuery } from "react-query";
 import styled from 'styled-components';
-import type { UpdateModelConfigRequest } from '@madoc.io/types/dist/gateway/api-definitions/update-model-config';
 
 const AutocompleteContainer = styled.div`
   display: flex;
@@ -19,19 +18,22 @@ const Heading3 = styled.h3`
   margin-top: 0.4em;
 `;
 
-
 export const AutocompleteCustomisation = ({
   heading,
+  actionLabel,
   property,
   pattern,
   adminMessage,
   thanks,
+  autocompleteEndpoint,
 }: {
   heading: string;
+  actionLabel?: string;
   property: string;
   pattern: string;
   adminMessage: string;
   thanks: string;
+  autocompleteEndpoint?: string;
 }) => {
   const { projectId, manifestId } = useRouteContext();
   const api = useApi();
@@ -63,6 +65,16 @@ export const AutocompleteCustomisation = ({
     }
   });
 
+  const initialResults = useQuery(['muya-plugin/autocomplete', { autocompleteEndpoint }], async () => {
+    if (autocompleteEndpoint) {
+      return await fetch(autocompleteEndpoint).then(r => r.json()).then(r => r.completions.map((comp: any) => ({
+        label: comp.label,
+        value: comp.uri
+      })));
+    }
+  }, { enabled: !!autocompleteEndpoint })
+
+
   if (!property) {
     return null;
   }
@@ -83,9 +95,28 @@ export const AutocompleteCustomisation = ({
     <>
       {heading ? <Heading3>{heading}</Heading3> : null}
       <AutocompleteContainer>
-        <input disabled={createStatus.isLoading} type="text" value={newId} onChange={(e) => setNewId(e.target.value)} />
-        <Button disabled={createStatus.isLoading} $primary onClick={() => create(newId)}>
-          Submit
+        {autocompleteEndpoint ?
+          <div style={{ flex: '1 1 0px', marginRight: '0.5em' }}>
+          <Form.DefaultSelect
+            inputId="role"
+            initialValue={newId}
+            isLoading={initialResults.isLoading} 
+            options={initialResults.data || []}
+            renderOptionLabel={({ label }) => <div style={{ lineHeight: '1.8em' }}>{label}</div>}
+            getOptionLabel={({ label }) => label}
+            getOptionValue={({ value }) => value}
+            onOptionChange={input => {
+              setNewId(input?.value || '');
+            }}
+          />
+          </div>
+
+          :
+          <input disabled={createStatus.isLoading} type="text" value={newId}
+                 onChange={(e) => setNewId(e.target.value)} />
+        }
+        <Button disabled={createStatus.isLoading || !newId} $primary onClick={() => create(newId)}>
+          {createStatus.isLoading ? 'loading...' : actionLabel || 'Submit'}
         </Button>
       </AutocompleteContainer>
       </>
@@ -103,12 +134,15 @@ blockConfigFor(AutocompleteCustomisation, {
     pattern: { type: 'text-field', label: 'Pattern for submitting', description: 'You can define a pattern. e.g. /my-api?tei=$id&query=% will replace $id with whatever the user inputs.' },
     thanks: { type: 'text-field', label: 'Thank you message' },
     adminMessage: { type: 'text-field', label: 'Admin message', description: 'This will be shown to an admin when they approve the request' },
+    autocompleteEndpoint: { type: 'text-field', label: 'Autocomplete endpoint', description: 'This will the input to a controlled list, instead of a text box' }
   },
   anyContext: [],
   defaultProps: {
     heading: '',
     property: '',
     pattern: '',
+    actionLabel: 'Submit',
+    autocompleteEndpoint: '',
     thanks: 'Thank you',
     adminMessage: 'A user wants to update an autocomplete endpoint',
   },
