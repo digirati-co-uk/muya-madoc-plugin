@@ -1,6 +1,6 @@
 {
   "name": "@digirati-co-uk/muya-madoc-plugin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/index.js",
   "description": "Madoc plugin for muya specific features",
   "license": "MIT",
