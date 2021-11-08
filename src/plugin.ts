@@ -1,5 +1,5 @@
 import '@madoc.io/types';
-import { AutocompleteCustomisation } from "./blocks/AutocompleteCusomisation";
+import { AutocompleteCustomisation } from './blocks/AutocompleteCusomisation';
 
 export function hookRoutes() {
   return [];
@@ -11,6 +11,6 @@ export function hookComponents() {
 
 export function hookBlocks() {
   return {
-    AutocompleteCustomisation
+    AutocompleteCustomisation,
   };
 }
