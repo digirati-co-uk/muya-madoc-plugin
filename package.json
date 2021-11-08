@@ -25,7 +25,7 @@
     "@madoc.io/bundler": "1.0.9",
     "@madoc.io/types": "^0.1.1",
     "@rollup/plugin-node-resolve": "^13.0.4",
-    "@types/react": "^17.0.21",
+    "@types/react": "^17.0.34",
     "@types/react-router-dom": "^5.1.9",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
